@@ -1,0 +1,56 @@
+﻿@model EscolaDokimi.ViewModels.CursoConsultaViewModel
+
+@{
+    ViewBag.Title = "Consultar";
+}
+
+<h2>Consultar</h2>
+
+<p>
+    @Html.ActionLink("Criar novo", "Cadastrar")
+</p>
+@if (Model.Cursos.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoCurso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Cursos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoCurso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = item.CodigoCurso }) |
+                    @Html.ActionLink("Detalhes", "Detalhes", new { id = item.CodigoCurso }) |
+                    @Html.ActionLink("Excluir", "Excluir", new { id = item.CodigoCurso })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
