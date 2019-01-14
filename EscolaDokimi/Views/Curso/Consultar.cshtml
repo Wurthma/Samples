@@ -1,4 +1,7 @@
-﻿@model EscolaDokimi.ViewModels.CursoConsultaViewModel
+﻿@using PagedList
+@using PagedList.Mvc
+
+@model EscolaDokimi.ViewModels.CursoConsultaViewModel
 
 @{
     ViewBag.Title = "Consultar";
@@ -9,48 +12,44 @@
 <p>
     @Html.ActionLink("Criar novo", "Cadastrar")
 </p>
-@if (Model.Cursos.Count() > 0)
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoCurso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model.Cursos)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodigoCurso)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Editar", new { id = item.CodigoCurso }) |
-                    @Html.ActionLink("Detalhes", "Detalhes", new { id = item.CodigoCurso }) |
-                    @Html.ActionLink("Excluir", "Excluir", new { id = item.CodigoCurso })
-                </td>
-            </tr>
-        }
-
-    </table>
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "listaCursos",
+        OnFailure = "alert('ERRO')"
+    };
 }
 
+@using (Ajax.BeginForm("Consultar", "Curso", null, ajaxOptions, htmlAttributes: new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.NumeroPagina)
+    @Html.HiddenFor(model => model.QtdePorPagina)
+    <div class="form-group">
+        @Html.LabelFor(model => model.CodigoCurso, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CodigoCurso, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CodigoCurso, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Consultar" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div id="listaCursos">
+    @* Partial view com lista de cursos da consulta *@
+    @Html.Partial("_ListaCursos", Model.Cursos.ToPagedList(Model.NumeroPagina, Model.QtdePorPagina))
+</div>

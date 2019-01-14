@@ -6,16 +6,16 @@ using System.Web;
 
 namespace EscolaDokimi.ViewModels
 {
-    public class CursoDetalhesViewModel
+    public class CursoViewModel
     {
         public int CodigoCurso { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public decimal Valor { get; set; }
 
-        public static explicit operator CursoDetalhesViewModel(Curso obj)
+        public static explicit operator CursoViewModel(Curso obj)
         {
-            return new CursoDetalhesViewModel
+            return new CursoViewModel
             {
                 CodigoCurso = obj.CodigoCurso,
                 Descricao = obj.Descricao,

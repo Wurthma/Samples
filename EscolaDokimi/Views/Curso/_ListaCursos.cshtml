@@ -1,0 +1,85 @@
+﻿@using EscolaDokimi.ViewModels
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<CursoViewModel>
+
+@{
+    ViewBag.Title = "Consultar";
+    Layout = null;
+}
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoCurso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Valor)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoCurso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = item.CodigoCurso }) |
+                    @Html.ActionLink("Detalhes", "Detalhes", new { id = item.CodigoCurso }) |
+                    @Html.ActionLink("Excluir", "Excluir", new { id = item.CodigoCurso })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div>
+        Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount
+
+        @if (Model.HasPreviousPage)
+        {
+            @Html.ActionLink(" ", "Consultar", new { numeroPagina = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @class = "btn btn-default glyphicon glyphicon-step-backward", @title = "Primeira" })
+            @Html.Raw(" ")
+            @Html.ActionLink(" ", "Consultar", new { numeroPagina = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @class = "btn btn-default glyphicon glyphicon-triangle-left", @title = "Anterior" })
+        }
+        else
+        {
+            <span class="btn btn-default glyphicon glyphicon-step-backward" title="Primeira"></span>
+            @Html.Raw(" ")
+            <span class="btn btn-default glyphicon glyphicon-triangle-left" title="Anterior"></span>
+        }
+
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink(" ", "Consultar", new { numeroPagina = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}, htmlAttributes: new { @class = "btn btn-default glyphicon glyphicon-triangle-right", @title = "Próxima" })
+            @Html.Raw(" ")
+            @Html.ActionLink(" ", "Consultar", new { numeroPagina = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}, htmlAttributes: new { @class = "btn btn-default glyphicon glyphicon-step-forward", @title = "Última" })
+        }
+        else
+        {
+            <span class="btn btn-default glyphicon glyphicon-triangle-right" title="Próxima"></span>
+            @Html.Raw(" ")
+            <span class="btn btn-default glyphicon glyphicon-step-forward" title="Última"></span>
+        }
+    </div>
+}
+
