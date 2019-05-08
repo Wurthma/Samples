@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApp", "ProductsApp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperComSQL", "DapperComSQL\DapperComSQL.csproj", "{C821D306-E3FD-418D-BD30-1213EE33BB81}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EscolaDokimi", "EscolaDokimi", "{5E451304-9B2D-4502-AE1A-1E948779A13B}"
-	ProjectSection(SolutionItems) = preProject
-		package.config = package.config
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
